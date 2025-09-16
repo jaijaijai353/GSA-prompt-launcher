@@ -115,6 +115,27 @@
             font-weight: 600;
         }
 
+        #manual-links {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .manual-link {
+            display: block;
+            margin: 10px 0;
+            padding: 15px;
+            font-size: 1.1em;
+            background: var(--secondary-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .manual-link:hover {
+            background: var(--primary-color);
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -164,7 +185,15 @@
 
         <div id="popup-warning">
             <i class="fa-solid fa-triangle-exclamation"></i> <strong>Pop-ups Blocked!</strong><br>
-            Please allow pop-ups for this site in your browser's settings and try again.
+            Please allow pop-ups for this site in your browser's settings and try again, or use the manual links below.
+        </div>
+
+        <div id="manual-links">
+            <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=16" target="_blank" class="manual-link">🚀 Open Prompt 1</a>
+            <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=15" target="_blank" class="manual-link">🚀 Open Prompt 2</a>
+            <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=14" target="_blank" class="manual-link">🚀 Open Prompt 3</a>
+            <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=13" target="_blank" class="manual-link">🚀 Open Prompt 4</a>
+            <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=6" target="_blank" class="manual-link">🚀 Open Prompt 5</a>
         </div>
     </div>
 
@@ -173,6 +202,7 @@
             const openAllBtn = document.getElementById('openAllBtn');
             const popupWarning = document.getElementById('popup-warning');
             const initialInfo = document.getElementById('initial-info');
+            const manualLinks = document.getElementById('manual-links');
 
             const links = [
                 "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=16",
@@ -186,6 +216,7 @@
                 openAllBtn.disabled = true;
                 openAllBtn.innerHTML = '<i class="fa-solid fa-ban"></i> Pop-ups Blocked';
                 popupWarning.style.display = 'block';
+                manualLinks.style.display = 'block';
                 initialInfo.style.display = 'none';
             }
 
@@ -216,7 +247,7 @@
 
                 if (popupsBlocked) {
                     disableButton();
-                    alert("Your browser blocked the pop-ups. Please enable them and try again.");
+                    alert("Your browser blocked the pop-ups. Please enable them or use manual links below.");
                 }
             });
         });
