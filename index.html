@@ -203,6 +203,7 @@ h1 .icon {
 <div id="popup-warning">
     <i class="fa-solid fa-triangle-exclamation"></i> <strong>Pop-ups Blocked!</strong><br><br>
     To launch all 5 prompts, please <strong>enable pop-ups</strong> and then click <strong>Retry</strong> or <strong>Allow Pop-ups</strong> below.<br>
+    <a href="https://support.google.com/chrome/answer/95472" target="_blank" style="color:#333; text-decoration:underline;">How to enable pop-ups</a><br>
     <button id="retryBtn">Retry</button>
     <button id="allowBtn">Allow Pop-ups</button>
 </div>
@@ -265,19 +266,25 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         if (popupsBlocked) {
             disableButton();
-            alert("Your browser blocked some pop-ups. Please allow them or use manual links below.");
-        } else {
-            popupWarning.style.display = 'none';
-            manualLinks.style.display = 'none';
-            openAllBtn.disabled = false;
-            openAllBtn.innerHTML = '<i class="fa-solid fa-bolt-lightning"></i> Launch All Prompts';
+            alert("Your browser blocked the pop-ups. Please enable them or use manual links below.");
         }
     }
 
     openAllBtn.addEventListener('click', openAllPrompts);
 
-    retryBtn.addEventListener('click', openAllPrompts);
-    allowBtn.addEventListener('click', openAllPrompts);
+    retryBtn.addEventListener('click', function () {
+        if (checkPopups()) {
+            popupWarning.style.display = 'none';
+            manualLinks.style.display = 'none';
+            openAllBtn.disabled = false;
+            openAllBtn.innerHTML = '<i class="fa-solid fa-bolt-lightning"></i> Launch All Prompts';
+            openAllPrompts();
+        }
+    });
+
+    allowBtn.addEventListener('click', function () {
+        window.open('https://support.google.com/chrome/answer/95472', '_blank');
+    });
 });
 </script>
 
