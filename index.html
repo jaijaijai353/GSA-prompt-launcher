@@ -173,7 +173,6 @@ h1 .icon {
 
 #retryBtn:hover, #allowBtn:hover { transform: translateY(-3px) scale(1.05); }
 
-/* Browser pop-up tip */
 #browser-tip {
     position: fixed;
     top: 10px;
@@ -186,7 +185,7 @@ h1 .icon {
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     animation: pulseTip 2s infinite;
     z-index: 9999;
-    display: none; /* hidden by default */
+    display: none;
 }
 
 @keyframes pulseTip {
@@ -245,11 +244,10 @@ h1 .icon {
     <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=15" target="_blank" class="manual-link">🚀 Open Prompt 2</a>
     <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=14" target="_blank" class="manual-link">🚀 Open Prompt 3</a>
     <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=13" target="_blank" class="manual-link">🚀 Open Prompt 4</a>
-    <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=6" target="_blank" class="manual-link">🚀 Open Prompt 5</a>
+    <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=17" target="_blank" class="manual-link">🚀 Open Prompt 5</a>
 </div>
 </div>
 
-<!-- Tip for browser pop-up -->
 <div id="browser-tip"><i class="fa-solid fa-arrow-up"></i> Pop-up blocked! Click <strong>Allow</strong> at the top-right of your browser toolbar.</div>
 
 <script>
@@ -267,7 +265,7 @@ document.addEventListener('DOMContentLoaded', function () {
         "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=15",
         "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=14",
         "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=13",
-        "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=6"
+        "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=17"
     ];
 
     function disableButton() {
@@ -276,7 +274,7 @@ document.addEventListener('DOMContentLoaded', function () {
         popupWarning.style.display = 'block';
         manualLinks.style.display = 'block';
         tooltip.style.opacity = '1';
-        browserTip.style.display = 'block'; // Show browser tip
+        browserTip.style.display = 'block';
         setTimeout(() => { tooltip.style.opacity = '0'; }, 3000);
     }
 
@@ -313,7 +311,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (checkPopups()) {
             popupWarning.style.display = 'none';
             manualLinks.style.display = 'none';
-            browserTip.style.display = 'none'; // Hide tip after retry
+            browserTip.style.display = 'none';
             openAllBtn.disabled = false;
             openAllBtn.innerHTML = '<i class="fa-solid fa-bolt-lightning"></i> Launch All Prompts';
             openAllPrompts();
