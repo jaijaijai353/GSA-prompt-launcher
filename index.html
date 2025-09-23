@@ -1,73 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
-<title>🌐 GSA Prompt Launcher</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>🌐 GSA Prompt Launcher</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
 <style>
 :root {
     --primary-color: #00c6ff;
     --secondary-color: #0072ff;
-    --dark-bg: #121828;
+    --dark-bg: #0f172a;
+    --card-bg: rgba(30,41,59,0.8);
     --light-text: #e0e0e0;
-    --dark-text: #1e1e1e;
-    --card-bg: rgba(42, 82, 152, 0.2);
+    --hover-color: #334155;
     --warning-bg: #ffc107;
     --warning-color: #333;
 }
 
 body {
+    margin: 0;
     font-family: 'Poppins', sans-serif;
-    background-color: var(--dark-bg);
-    background-image:
-        radial-gradient(circle at 25% 25%, rgba(0, 198, 255, 0.1) 0%, rgba(0, 198, 255, 0) 50%),
-        radial-gradient(circle at 75% 75%, rgba(0, 114, 255, 0.1) 0%, rgba(0, 114, 255, 0) 50%);
+    background: linear-gradient(135deg,#0f172a,#1e293b);
     color: var(--light-text);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
     min-height: 100vh;
-    margin: 0;
-    padding: 20px;
-    box-sizing: border-box;
+    padding: 40px 20px;
+}
+
+h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(0,198,255,0.5);
+    animation: fadeInDown 1s ease forwards;
 }
 
 .container {
     background: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
     padding: 40px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    text-align: center;
-    max-width: 600px;
+    border-radius: 20px;
     width: 100%;
+    max-width: 700px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
     animation: fadeIn 1s ease forwards;
-}
-
-h1 {
-    font-size: 2.5em;
-    font-weight: 600;
-    margin-bottom: 20px;
-    color: #ffffff;
-    text-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
-}
-
-h1 .icon {
-    margin-right: 15px;
-    animation: rocket-fly 5s ease-in-out infinite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .button-container {
-    margin: 30px 0;
     position: relative;
+    margin: 20px 0;
 }
 
 .tooltip {
@@ -75,80 +64,82 @@ h1 .icon {
     top: -50px;
     left: 50%;
     transform: translateX(-50%);
-    background: #0072ff;
+    background: var(--secondary-color);
     color: #fff;
-    padding: 8px 15px;
+    padding: 10px 15px;
     border-radius: 8px;
     font-size: 0.9em;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
     white-space: nowrap;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
 .button-container:hover .tooltip {
     opacity: 1;
 }
 
-#openAllBtn {
-    padding: 20px 50px;
-    font-size: 1.5em;
-    font-weight: 600;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+button.launch-btn {
+    background: linear-gradient(45deg,var(--primary-color),var(--secondary-color));
     border: none;
     border-radius: 50px;
-    color: var(--dark-text);
+    padding: 20px 50px;
+    color: var(--dark-bg);
+    font-weight: 600;
+    font-size: 1.5em;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(0, 198, 255, 0.4);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0,198,255,0.4);
 }
 
-#openAllBtn:hover:not(:disabled) {
+button.launch-btn:hover {
     transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 8px 30px rgba(0, 198, 255, 0.6);
+    box-shadow: 0 8px 30px rgba(0,198,255,0.6);
 }
 
-#openAllBtn:active:not(:disabled) {
-    transform: translateY(-2px) scale(1.02);
-}
-
-#openAllBtn:disabled {
+button.launch-btn:disabled {
     background: #555;
     color: #999;
     cursor: not-allowed;
     box-shadow: none;
 }
 
-.info { font-size: 1em; opacity: 0.8; margin-top: 20px; }
-
 #popup-warning {
     display: none;
-    background-color: var(--warning-bg);
+    background: var(--warning-bg);
     color: var(--warning-color);
     padding: 20px;
+    margin-top: 20px;
     border-radius: 12px;
-    margin-top: 25px;
     font-weight: 600;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
     animation: bounce 1.5s infinite;
 }
 
-#manual-links { display: none; margin-top: 20px; }
+#manual-links {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    width: 100%;
+}
 
 .manual-link {
     display: block;
-    margin: 10px 0;
-    padding: 15px;
+    margin: 8px 0;
+    padding: 15px 25px;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
     font-size: 1.1em;
     background: var(--secondary-color);
     color: #fff;
     text-decoration: none;
-    border-radius: 10px;
+    border-radius: 12px;
     transition: all 0.3s ease;
     animation: pulse 2s infinite;
 }
@@ -158,40 +149,19 @@ h1 .icon {
     transform: scale(1.05);
 }
 
-#retryBtn, #allowBtn {
-    padding: 12px 25px;
-    font-size: 1em;
-    font-weight: 600;
-    background: #0072ff;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: transform 0.2s ease;
-}
-
-#retryBtn:hover, #allowBtn:hover { transform: translateY(-3px) scale(1.05); }
-
 #browser-tip {
     position: fixed;
     top: 10px;
     right: 10px;
-    background: #ffc107;
-    color: #333;
+    background: var(--warning-bg);
+    color: var(--warning-color);
     padding: 12px 20px;
     border-radius: 10px;
     font-weight: 600;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    display: none;
     animation: pulseTip 2s infinite;
     z-index: 9999;
-    display: none;
-}
-
-@keyframes pulseTip {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
 }
 
 #browser-tip i {
@@ -199,44 +169,38 @@ h1 .icon {
     animation: bounceArrow 1s infinite;
 }
 
+/* Animations */
 @keyframes bounceArrow {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-5px);}
 }
-
-@keyframes fadeIn { from { opacity:0; transform: translateY(-20px);} to{opacity:1; transform: translateY(0);} }
-@keyframes rocket-fly { 0%{transform:translateY(0) rotate(0);}50%{transform:translateY(-10px) rotate(5deg);}100%{transform:translateY(0) rotate(0);} }
+@keyframes fadeInDown { from {opacity:0; transform:translateY(-20px);} to{opacity:1; transform:translateY(0);} }
+@keyframes fadeIn { from {opacity:0;} to{opacity:1;} }
 @keyframes bounce {0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);} }
 @keyframes pulse {0%{transform:scale(1);}50%{transform:scale(1.03);}100%{transform:scale(1);} }
+@keyframes pulseTip {0%{transform:scale(1);}50%{transform:scale(1.05);}100%{transform:scale(1);} }
 
+/* Responsive */
 @media (max-width:600px) {
-    .container{padding:25px;}
-    h1{font-size:2em;}
-    #openAllBtn{width:100%; padding:18px; font-size:1.2em; justify-content:center;}
-    .tooltip{top:-45px;font-size:0.85em;}
+    h1 { font-size: 2em; }
+    button.launch-btn { width: 100%; font-size: 1.3em; justify-content:center; padding: 18px; }
+    .manual-link { width: 95%; font-size: 1em; }
 }
 </style>
 </head>
 
 <body>
 <div class="container">
-<h1><span class="icon">🚀</span>GSA Prompt Launcher</h1>
+<h1>🚀 GSA Prompt Launcher</h1>
 
 <div class="button-container">
     <div class="tooltip">Pop-ups must be enabled to open all prompts</div>
-    <button id="openAllBtn"><i class="fa-solid fa-bolt-lightning"></i> Launch All Prompts</button>
-</div>
-
-<div class="info" id="initial-info">
-    Click the button to open all your GSA prompts in new tabs instantly.
+    <button class="launch-btn" id="openAllBtn"><i class="fa-solid fa-bolt-lightning"></i> Launch All Prompts</button>
 </div>
 
 <div id="popup-warning">
-    <i class="fa-solid fa-triangle-exclamation"></i> <strong>Pop-ups Blocked!</strong><br><br>
-    To launch all 5 prompts, please <strong>enable pop-ups</strong> and then click <strong>Retry</strong> or <strong>Allow Pop-ups</strong> below.<br>
-    <a href="https://support.google.com/chrome/answer/95472" target="_blank" style="color:#333; text-decoration:underline;">How to enable pop-ups</a><br>
-    <button id="retryBtn">Retry</button>
-    <button id="allowBtn">Allow Pop-ups</button>
+    <i class="fa-solid fa-triangle-exclamation"></i> <strong>Pop-ups Blocked!</strong><br>
+    Enable pop-ups or use the manual links below.
 </div>
 
 <div id="manual-links">
@@ -248,16 +212,13 @@ h1 .icon {
 </div>
 </div>
 
-<div id="browser-tip"><i class="fa-solid fa-arrow-up"></i> Pop-up blocked! Click <strong>Allow</strong> at the top-right of your browser toolbar.</div>
+<div id="browser-tip"><i class="fa-solid fa-arrow-up"></i> Pop-up blocked! Click <strong>Allow</strong> in your browser toolbar.</div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     const openAllBtn = document.getElementById('openAllBtn');
     const popupWarning = document.getElementById('popup-warning');
     const manualLinks = document.getElementById('manual-links');
-    const retryBtn = document.getElementById('retryBtn');
-    const allowBtn = document.getElementById('allowBtn');
-    const tooltip = document.querySelector('.tooltip');
     const browserTip = document.getElementById('browser-tip');
 
     const links = [
@@ -268,59 +229,30 @@ document.addEventListener('DOMContentLoaded', function () {
         "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=17"
     ];
 
-    function disableButton() {
-        openAllBtn.disabled = true;
-        openAllBtn.innerHTML = '<i class="fa-solid fa-ban"></i> Pop-ups Blocked';
-        popupWarning.style.display = 'block';
-        manualLinks.style.display = 'block';
-        tooltip.style.opacity = '1';
-        browserTip.style.display = 'block';
-        setTimeout(() => { tooltip.style.opacity = '0'; }, 3000);
-    }
-
     function checkPopups() {
         const testWindow = window.open('about:blank', '_blank', 'width=1,height=1,left=9999,top=9999');
         if (!testWindow || testWindow.closed || typeof testWindow.closed === 'undefined') {
-            disableButton();
+            popupWarning.style.display = 'block';
+            manualLinks.style.display = 'flex';
+            browserTip.style.display = 'block';
+            openAllBtn.disabled = true;
             return false;
         }
         testWindow.close();
         return true;
     }
 
-    checkPopups();
-
-    function openAllPrompts() {
-        let popupsBlocked = false;
-        for (const link of links) {
-            const newWindow = window.open(link, '_blank');
-            if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-                popupsBlocked = true;
-                break;
-            }
-        }
-        if (popupsBlocked) {
-            disableButton();
-            alert("Your browser blocked the pop-ups. Please enable them or use manual links below.");
-        }
+    function launchAll() {
+        if (!checkPopups()) return;
+        links.forEach((url, i) => {
+            setTimeout(() => {
+                const win = window.open(url,'_blank');
+                if(!win){checkPopups();}
+            }, i * 500);
+        });
     }
 
-    openAllBtn.addEventListener('click', openAllPrompts);
-
-    retryBtn.addEventListener('click', function () {
-        if (checkPopups()) {
-            popupWarning.style.display = 'none';
-            manualLinks.style.display = 'none';
-            browserTip.style.display = 'none';
-            openAllBtn.disabled = false;
-            openAllBtn.innerHTML = '<i class="fa-solid fa-bolt-lightning"></i> Launch All Prompts';
-            openAllPrompts();
-        }
-    });
-
-    allowBtn.addEventListener('click', function () {
-        window.open('https://support.google.com/chrome/answer/95472', '_blank');
-    });
+    openAllBtn.addEventListener('click', launchAll);
 });
 </script>
 
