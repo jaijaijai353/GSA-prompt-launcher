@@ -18,65 +18,49 @@
     --warning-color: #333;
 }
 
+/* Reset & body */
+* { margin:0; padding:0; box-sizing:border-box; }
 body {
-    margin: 0;
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg,#0f172a,#1e293b);
     color: var(--light-text);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    min-height: 100vh;
-    padding: 40px 20px;
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
+    flex-direction:column;
+    min-height:100vh;
+    padding:40px 20px;
 }
 
+/* Header */
 h1 {
-    font-size: 3em;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #ffffff;
-    text-shadow: 0 0 10px rgba(0,198,255,0.5);
+    font-size:3em;
+    margin-bottom:20px;
+    color:white;
+    text-align:center;
+    text-shadow:0 0 10px rgba(0,198,255,0.5);
     animation: fadeInDown 1s ease forwards;
 }
 
+/* Container */
 .container {
     background: var(--card-bg);
     padding: 40px;
     border-radius: 20px;
-    width: 100%;
-    max-width: 700px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    width:100%;
+    max-width:700px;
+    box-shadow:0 10px 40px rgba(0,0,0,0.5);
     backdrop-filter: blur(10px);
     animation: fadeIn 1s ease forwards;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
 }
 
+/* Button */
 .button-container {
     position: relative;
     margin: 20px 0;
-}
-
-.tooltip {
-    position: absolute;
-    top: -50px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--secondary-color);
-    color: #fff;
-    padding: 10px 15px;
-    border-radius: 8px;
-    font-size: 0.9em;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-    white-space: nowrap;
-}
-
-.button-container:hover .tooltip {
-    opacity: 1;
 }
 
 button.launch-btn {
@@ -92,88 +76,101 @@ button.launch-btn {
     align-items: center;
     gap: 15px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(0,198,255,0.4);
+    box-shadow:0 4px 20px rgba(0,198,255,0.4);
 }
 
 button.launch-btn:hover {
     transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 8px 30px rgba(0,198,255,0.6);
+    box-shadow:0 8px 30px rgba(0,198,255,0.6);
 }
 
 button.launch-btn:disabled {
-    background: #555;
-    color: #999;
-    cursor: not-allowed;
-    box-shadow: none;
+    background:#555;
+    color:#999;
+    cursor:not-allowed;
+    box-shadow:none;
 }
 
+/* Tooltip */
+.tooltip {
+    position:absolute;
+    top:-50px;
+    left:50%;
+    transform:translateX(-50%);
+    background: var(--secondary-color);
+    color:#fff;
+    padding:10px 15px;
+    border-radius:8px;
+    font-size:0.9em;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.3s ease;
+    white-space:nowrap;
+}
+.button-container:hover .tooltip { opacity:1; }
+
+/* Warning */
 #popup-warning {
-    display: none;
+    display:none;
     background: var(--warning-bg);
     color: var(--warning-color);
-    padding: 20px;
-    margin-top: 20px;
-    border-radius: 12px;
-    font-weight: 600;
-    text-align: center;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-    animation: bounce 1.5s infinite;
+    padding:20px;
+    margin-top:20px;
+    border-radius:12px;
+    font-weight:600;
+    text-align:center;
+    box-shadow:0 5px 20px rgba(0,0,0,0.3);
+    animation:bounce 1.5s infinite;
 }
 
+/* Manual Links */
 #manual-links {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-    width: 100%;
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    margin-top:20px;
+    width:100%;
 }
 
 .manual-link {
-    display: block;
-    margin: 8px 0;
-    padding: 15px 25px;
-    width: 80%;
-    max-width: 500px;
-    text-align: center;
-    font-size: 1.1em;
+    display:block;
+    margin:8px 0;
+    padding:15px 25px;
+    width:80%;
+    max-width:500px;
+    text-align:center;
+    font-size:1.1em;
     background: var(--secondary-color);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 12px;
+    color:#fff;
+    text-decoration:none;
+    border-radius:12px;
     transition: all 0.3s ease;
-    animation: pulse 2s infinite;
+    animation:pulse 2s infinite;
 }
-
 .manual-link:hover {
     background: var(--primary-color);
     transform: scale(1.05);
 }
 
+/* Browser tip */
 #browser-tip {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    background: var(--warning-bg);
-    color: var(--warning-color);
-    padding: 12px 20px;
-    border-radius: 10px;
-    font-weight: 600;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    display: none;
-    animation: pulseTip 2s infinite;
-    z-index: 9999;
+    position:fixed;
+    top:10px;
+    right:10px;
+    background:var(--warning-bg);
+    color:var(--warning-color);
+    padding:12px 20px;
+    border-radius:10px;
+    font-weight:600;
+    box-shadow:0 4px 12px rgba(0,0,0,0.3);
+    display:none;
+    animation:pulseTip 2s infinite;
+    z-index:9999;
 }
-
-#browser-tip i {
-    margin-right: 10px;
-    animation: bounceArrow 1s infinite;
-}
+#browser-tip i { margin-right:10px; animation:bounceArrow 1s infinite; }
 
 /* Animations */
-@keyframes bounceArrow {
-    0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-5px);}
-}
+@keyframes bounceArrow {0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
 @keyframes fadeInDown { from {opacity:0; transform:translateY(-20px);} to{opacity:1; transform:translateY(0);} }
 @keyframes fadeIn { from {opacity:0;} to{opacity:1;} }
 @keyframes bounce {0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);} }
@@ -182,13 +179,12 @@ button.launch-btn:disabled {
 
 /* Responsive */
 @media (max-width:600px) {
-    h1 { font-size: 2em; }
-    button.launch-btn { width: 100%; font-size: 1.3em; justify-content:center; padding: 18px; }
-    .manual-link { width: 95%; font-size: 1em; }
+    h1 { font-size:2em; }
+    button.launch-btn { width:100%; font-size:1.3em; justify-content:center; padding:18px; }
+    .manual-link { width:95%; font-size:1em; }
 }
 </style>
 </head>
-
 <body>
 <div class="container">
 <h1>🚀 GSA Prompt Launcher</h1>
@@ -204,11 +200,11 @@ button.launch-btn:disabled {
 </div>
 
 <div id="manual-links">
-    <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=16" target="_blank" class="manual-link">🚀 Open Prompt 1</a>
-    <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=15" target="_blank" class="manual-link">🚀 Open Prompt 2</a>
-    <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=14" target="_blank" class="manual-link">🚀 Open Prompt 3</a>
-    <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=13" target="_blank" class="manual-link">🚀 Open Prompt 4</a>
-    <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=17" target="_blank" class="manual-link">🚀 Open Prompt 5</a>
+    <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=16&v=2" target="_blank" class="manual-link">🚀 Open Prompt 1</a>
+    <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=15&v=2" target="_blank" class="manual-link">🚀 Open Prompt 2</a>
+    <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=14&v=2" target="_blank" class="manual-link">🚀 Open Prompt 3</a>
+    <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=13&v=2" target="_blank" class="manual-link">🚀 Open Prompt 4</a>
+    <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=17&v=2" target="_blank" class="manual-link">🚀 Open Prompt 5</a>
 </div>
 </div>
 
@@ -222,20 +218,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const browserTip = document.getElementById('browser-tip');
 
     const links = [
-        "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=16",
-        "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=15",
-        "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=14",
-        "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=13",
-        "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=17"
+        "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=16&v=2",
+        "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=15&v=2",
+        "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=14&v=2",
+        "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=13&v=2",
+        "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=17&v=2"
     ];
 
     function checkPopups() {
-        const testWindow = window.open('about:blank', '_blank', 'width=1,height=1,left=9999,top=9999');
-        if (!testWindow || testWindow.closed || typeof testWindow.closed === 'undefined') {
-            popupWarning.style.display = 'block';
-            manualLinks.style.display = 'flex';
-            browserTip.style.display = 'block';
-            openAllBtn.disabled = true;
+        const testWindow = window.open('about:blank','_blank','width=1,height=1,left=9999,top=9999');
+        if(!testWindow || testWindow.closed || typeof testWindow.closed==='undefined'){
+            popupWarning.style.display='block';
+            manualLinks.style.display='flex';
+            browserTip.style.display='block';
+            openAllBtn.disabled=true;
             return false;
         }
         testWindow.close();
@@ -243,18 +239,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function launchAll() {
-        if (!checkPopups()) return;
-        links.forEach((url, i) => {
-            setTimeout(() => {
-                const win = window.open(url,'_blank');
-                if(!win){checkPopups();}
-            }, i * 500);
-        });
+        if(!checkPopups()) return;
+        links.forEach((url,i)=>{setTimeout(()=>{const w=window.open(url,'_blank'); if(!w){checkPopups();}},i*500);});
     }
 
-    openAllBtn.addEventListener('click', launchAll);
+    openAllBtn.addEventListener('click',launchAll);
 });
 </script>
-
 </body>
 </html>
