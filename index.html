@@ -18,7 +18,6 @@
     --warning-color: #333;
 }
 
-/* Reset & body */
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
     font-family: 'Poppins', sans-serif;
@@ -32,7 +31,6 @@ body {
     padding:40px 20px;
 }
 
-/* Header */
 h1 {
     font-size:3em;
     margin-bottom:20px;
@@ -42,7 +40,6 @@ h1 {
     animation: fadeInDown 1s ease forwards;
 }
 
-/* Container */
 .container {
     background: var(--card-bg);
     padding: 40px;
@@ -57,7 +54,6 @@ h1 {
     align-items:center;
 }
 
-/* Button */
 .button-container {
     position: relative;
     margin: 20px 0;
@@ -91,7 +87,6 @@ button.launch-btn:disabled {
     box-shadow:none;
 }
 
-/* Tooltip */
 .tooltip {
     position:absolute;
     top:-50px;
@@ -109,7 +104,6 @@ button.launch-btn:disabled {
 }
 .button-container:hover .tooltip { opacity:1; }
 
-/* Warning */
 #popup-warning {
     display:none;
     background: var(--warning-bg);
@@ -123,36 +117,6 @@ button.launch-btn:disabled {
     animation:bounce 1.5s infinite;
 }
 
-/* Manual Links */
-#manual-links {
-    display:none;
-    flex-direction:column;
-    align-items:center;
-    margin-top:20px;
-    width:100%;
-}
-
-.manual-link {
-    display:block;
-    margin:8px 0;
-    padding:15px 25px;
-    width:80%;
-    max-width:500px;
-    text-align:center;
-    font-size:1.1em;
-    background: var(--secondary-color);
-    color:#fff;
-    text-decoration:none;
-    border-radius:12px;
-    transition: all 0.3s ease;
-    animation:pulse 2s infinite;
-}
-.manual-link:hover {
-    background: var(--primary-color);
-    transform: scale(1.05);
-}
-
-/* Browser tip */
 #browser-tip {
     position:fixed;
     top:10px;
@@ -169,19 +133,15 @@ button.launch-btn:disabled {
 }
 #browser-tip i { margin-right:10px; animation:bounceArrow 1s infinite; }
 
-/* Animations */
-@keyframes bounceArrow {0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+@keyframes bounceArrow {0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);} }
 @keyframes fadeInDown { from {opacity:0; transform:translateY(-20px);} to{opacity:1; transform:translateY(0);} }
 @keyframes fadeIn { from {opacity:0;} to{opacity:1;} }
 @keyframes bounce {0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);} }
-@keyframes pulse {0%{transform:scale(1);}50%{transform:scale(1.03);}100%{transform:scale(1);} }
 @keyframes pulseTip {0%{transform:scale(1);}50%{transform:scale(1.05);}100%{transform:scale(1);} }
 
-/* Responsive */
 @media (max-width:600px) {
     h1 { font-size:2em; }
     button.launch-btn { width:100%; font-size:1.3em; justify-content:center; padding:18px; }
-    .manual-link { width:95%; font-size:1em; }
 }
 </style>
 </head>
@@ -196,15 +156,7 @@ button.launch-btn:disabled {
 
 <div id="popup-warning">
     <i class="fa-solid fa-triangle-exclamation"></i> <strong>Pop-ups Blocked!</strong><br>
-    Enable pop-ups or use the manual links below.
-</div>
-
-<div id="manual-links">
-    <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=16&v=2" target="_blank" class="manual-link">🚀 Open Prompt 1</a>
-    <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=15&v=2" target="_blank" class="manual-link">🚀 Open Prompt 2</a>
-    <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=14&v=2" target="_blank" class="manual-link">🚀 Open Prompt 3</a>
-    <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=13&v=2" target="_blank" class="manual-link">🚀 Open Prompt 4</a>
-    <a href="https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=17&v=2" target="_blank" class="manual-link">🚀 Open Prompt 5</a>
+    Enable pop-ups to launch prompts successfully.
 </div>
 </div>
 
@@ -214,7 +166,6 @@ button.launch-btn:disabled {
 document.addEventListener('DOMContentLoaded', () => {
     const openAllBtn = document.getElementById('openAllBtn');
     const popupWarning = document.getElementById('popup-warning');
-    const manualLinks = document.getElementById('manual-links');
     const browserTip = document.getElementById('browser-tip');
 
     const links = [
@@ -229,7 +180,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const testWindow = window.open('about:blank','_blank','width=1,height=1,left=9999,top=9999');
         if(!testWindow || testWindow.closed || typeof testWindow.closed==='undefined'){
             popupWarning.style.display='block';
-            manualLinks.style.display='flex';
             browserTip.style.display='block';
             openAllBtn.disabled=true;
             return false;
