@@ -156,12 +156,84 @@
             border: none;
             border-radius: 8px;
             padding: 8px 15px;
-            margin-top: 15px;
+            margin: 15px auto 0;
             cursor: pointer;
             transition: background 0.2s;
+            display: block;
         }
 
         .recheck-btn:hover { background: #444; }
+        
+        /* --- NEW STYLES for POP-UP HELP --- */
+        .popup-help-container {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(51, 65, 85, 0.7);
+        }
+        .help-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: #444;
+        }
+        .help-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .help-tab-btn {
+            background: rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.2);
+            color: var(--warning-color);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .help-tab-btn:hover {
+            background: rgba(0,0,0,0.2);
+        }
+        .help-tab-btn.active {
+            background: var(--dark-bg);
+            color: var(--primary-color);
+            border-color: var(--dark-bg);
+        }
+        .help-content {
+            display: none;
+            text-align: left;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            color: #333;
+        }
+        .help-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+        .help-content ol {
+            padding-left: 25px;
+            margin-top: 10px;
+        }
+        .help-content li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .help-content i {
+            color: var(--secondary-color);
+            width: 20px;
+            text-align: center;
+        }
+        .help-content strong {
+            color: #000;
+        }
+        /* --- END NEW STYLES --- */
 
         #fallback-links {
             width: 100%;
@@ -273,14 +345,39 @@ document.addEventListener('DOMContentLoaded', () => {
             statusMessage.className = 'warning';
             statusMessage.innerHTML = `
                 <i class="fa-solid fa-triangle-exclamation"></i> <strong>Pop-ups Blocked!</strong><br>
-                Look for a blocked pop-up icon in your browser's address bar to allow them, then re-check.
+                To launch all prompts automatically, you need to allow pop-ups for this site.
                 <button class="recheck-btn">Re-check Permissions</button>
+                <div class="popup-help-container">
+                    <p class="help-title">How to enable pop-ups?</p>
+                    <div class="help-tabs">
+                        <button class="help-tab-btn active" data-target="help-desktop"><i class="fa-solid fa-laptop"></i> Desktop / Mac</button>
+                        <button class="help-tab-btn" data-target="help-android"><i class="fa-brands fa-android"></i> Android</button>
+                        <button class="help-tab-btn" data-target="help-iphone"><i class="fa-brands fa-apple"></i> iPhone</button>
+                    </div>
+                    <div class="help-content active" id="help-desktop">
+                        <p>On <strong>Chrome, Firefox, Edge, or Safari</strong>, after a pop-up is blocked, an icon usually appears in the right side of the address bar.</p>
+                        
+                        <p style="margin-top:10px;">Click the icon and choose to <strong>"Always allow pop-ups and redirects"</strong> from this website, then try launching again.</p>
+                    </div>
+                    <div class="help-content" id="help-android">
+                        <p><strong>For Chrome on Android:</strong></p>
+                        <ol>
+                            <li>Tap the three-dot menu <i class="fa-solid fa-ellipsis-v"></i> in the top-right.</li>
+                            <li>Go to <strong>Settings</strong> &rarr; <strong>Site settings</strong> &rarr; <strong>Pop-ups and redirects</strong>.</li>
+                            <li>Make sure the toggle is set to <strong>Allowed</strong>.</li>
+                        </ol>
+                    </div>
+                    <div class="help-content" id="help-iphone">
+                        <p><strong>For Safari on iPhone/iPad:</strong></p>
+                         <ol>
+                            <li>Open the <strong>Settings</strong> app on your device.</li>
+                            <li>Scroll down and tap on <strong>Safari</strong>.</li>
+                            <li>Under the "GENERAL" section, find <strong>Block Pop-ups</strong> and turn the switch <strong>OFF</strong>.</li>
+                        </ol>
+                    </div>
+                </div>
             `;
             statusMessage.style.display = 'block';
-            // Add event listener to the new button
-            statusMessage.querySelector('.recheck-btn').addEventListener('click', () => {
-                 updateUiForPermissions(checkPopupPermissions());
-            });
         }
     }
 
@@ -338,6 +435,30 @@ document.addEventListener('DOMContentLoaded', () => {
             }, i * LAUNCH_DELAY_MS);
         });
     }
+
+    // --- Event Delegation for Dynamic Content ---
+    statusMessage.addEventListener('click', (e) => {
+        // Handle recheck button click
+        if (e.target.closest('.recheck-btn')) {
+            updateUiForPermissions(checkPopupPermissions());
+        }
+
+        // Handle help tabs click
+        const tab = e.target.closest('.help-tab-btn');
+        if (tab) {
+            const targetId = tab.dataset.target;
+            const helpContainer = tab.closest('.popup-help-container');
+            if (!helpContainer) return;
+
+            // Deactivate all tabs and content panels
+            helpContainer.querySelectorAll('.help-tab-btn').forEach(btn => btn.classList.remove('active'));
+            helpContainer.querySelectorAll('.help-content').forEach(content => content.classList.remove('active'));
+
+            // Activate the clicked tab and corresponding content panel
+            tab.classList.add('active');
+            helpContainer.querySelector(`#${targetId}`).classList.add('active');
+        }
+    });
 
     // --- Initialization ---
     launchBtn.addEventListener('click', handleLaunch);
