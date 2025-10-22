@@ -38,6 +38,7 @@ h1{font-size:3em;margin-bottom:20px;color:white;text-align:center;text-shadow:0 
 .fallback-links-list li{margin:10px 0;}
 .fallback-links-list a{color:var(--primary-color);text-decoration:none;font-weight:600;background:var(--hover-color);padding:10px 20px;border-radius:8px;display:block;transition:background 0.3s ease;}
 .fallback-links-list a:hover{background:var(--secondary-color);color:white;}
+#prompt-iframe{width:100%;height:500px;border:none;margin-top:20px;border-radius:12px;box-shadow:0 5px 20px rgba(0,0,0,0.3);}
 @keyframes spin{to{transform:rotate(360deg);}}
 </style>
 </head>
@@ -46,7 +47,7 @@ h1{font-size:3em;margin-bottom:20px;color:white;text-align:center;text-shadow:0 
 <main class="container">
     <h1><i class="fa-solid fa-rocket"></i> GSA Prompt Launcher</h1>
     <div class="button-container">
-        <div class="tooltip">Prompts will load sequentially in this tab</div>
+        <div class="tooltip">Prompts will load sequentially below</div>
         <button class="launch-btn" id="launchBtn">
             <i class="fa-solid fa-bolt-lightning btn-icon"></i>
             <span class="btn-text">Launch All Prompts</span>
@@ -54,6 +55,7 @@ h1{font-size:3em;margin-bottom:20px;color:white;text-align:center;text-shadow:0 
         </button>
     </div>
     <div id="status-message"></div>
+    <iframe id="prompt-iframe"></iframe>
     <div id="fallback-links"></div>
 </main>
 
@@ -69,37 +71,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const launchBtn = document.getElementById('launchBtn');
     const statusMessage = document.getElementById('status-message');
+    const iframe = document.getElementById('prompt-iframe');
     const fallbackLinksContainer = document.getElementById('fallback-links');
 
-    function loadSequentialUrls(index = 0) {
-        if (index >= urls.length) {
+    function loadSequentialPrompt(index = 0) {
+        if(index >= urls.length){
             statusMessage.className = 'success';
             statusMessage.innerHTML = `<i class="fa-solid fa-check-circle"></i> Successfully loaded all ${urls.length} prompts!`;
             launchBtn.disabled = false;
             launchBtn.classList.remove('loading');
             return;
         }
+
         statusMessage.className = '';
         statusMessage.innerHTML = `Loading prompt ${index + 1} of ${urls.length}...`;
+        iframe.src = urls[index];
 
-        // Redirect current tab to the URL
-        const tempWindow = window.open(urls[index], '_self');
-
-        // Use localStorage to track the next index
-        localStorage.setItem('nextIndex', index + 1);
-    }
-
-    // On page load, check if a nextIndex is stored
-    const nextIndex = parseInt(localStorage.getItem('nextIndex') || '0', 10);
-    if(nextIndex > 0 && nextIndex <= urls.length){
-        loadSequentialUrls(nextIndex);
-        localStorage.removeItem('nextIndex');
+        // Wait 5 seconds before loading the next prompt
+        setTimeout(() => {
+            loadSequentialPrompt(index + 1);
+        }, 5000);
     }
 
     launchBtn.addEventListener('click', () => {
         launchBtn.disabled = true;
         launchBtn.classList.add('loading');
-        loadSequentialUrls(0);
+        loadSequentialPrompt(0);
     });
 
     // Fallback links
