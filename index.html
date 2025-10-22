@@ -3,24 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌐 GSA Ultimate Launcher</title>
+<title>🌐 GSA Interactive Prompt Launcher</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 :root{
-    --primary:#00c6ff;
-    --secondary:#0072ff;
-    --bg-dark:#0f172a;
-    --card-bg:rgba(30,41,59,0.85);
-    --light-text:#e0e0e0;
-    --hover:#334155;
-    --success-bg:#28a745;
-    --warning-bg:#ffc107;
-    --error-bg:#dc3545;
-    --success-color:#fff;
-    --warning-color:#333;
-    --font-family:'Poppins',sans-serif;
-    --transition:.3s ease;
+  --primary:#00c6ff;
+  --secondary:#0072ff;
+  --bg-dark:#0f172a;
+  --card-bg:rgba(30,41,59,0.85);
+  --light-text:#e0e0e0;
+  --hover:#334155;
+  --success-bg:#28a745;
+  --warning-bg:#ffc107;
+  --error-bg:#dc3545;
+  --success-color:#fff;
+  --warning-color:#333;
+  --font-family:'Poppins',sans-serif;
+  --transition:.3s ease;
+  --particle-color:rgba(0,198,255,0.4);
 }
 
 /* ================= Reset ================= */
@@ -30,160 +31,210 @@ a{text-decoration:none;color:inherit;}
 ul{list-style:none;}
 
 /* ================= Particle Canvas ================= */
-#particle-canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;}
+#particle-canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;}
 
 /* ================= Container ================= */
 .container{
-    background:var(--card-bg);
-    padding:40px;
-    border-radius:20px;
-    width:100%;
-    max-width:800px;
-    box-shadow:0 15px 50px rgba(0,0,0,0.5);
-    backdrop-filter:blur(15px);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    animation:fadeIn 1s ease forwards;
-    position:relative;
-    z-index:1;
+  background:var(--card-bg);
+  padding:40px;
+  border-radius:20px;
+  width:100%;
+  max-width:900px;
+  box-shadow:0 15px 50px rgba(0,0,0,0.5);
+  backdrop-filter:blur(15px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  animation:fadeIn 1s ease forwards;
+  position:relative;
+  z-index:1;
 }
 
 /* ================= Heading ================= */
 h1{
-    font-size:3em;
-    margin-bottom:20px;
-    color:white;
-    text-align:center;
-    text-shadow:0 0 15px rgba(0,198,255,0.5);
-    animation:fadeInDown 1s ease forwards;
+  font-size:3em;
+  margin-bottom:20px;
+  color:white;
+  text-align:center;
+  text-shadow:0 0 15px rgba(0,198,255,0.5);
+  animation:fadeInDown 1s ease forwards;
 }
 
 /* ================= Launch Button ================= */
 .button-container{
-    position:relative;
-    margin:20px 0;
-    width:100%;
-    display:flex;
-    justify-content:center;
+  position:relative;
+  margin:20px 0;
+  width:100%;
+  display:flex;
+  justify-content:center;
 }
-
 .launch-btn{
-    background:linear-gradient(45deg,var(--primary),var(--secondary));
-    border:none;
-    border-radius:50px;
-    padding:20px 50px;
-    color:var(--bg-dark);
-    font-weight:700;
-    font-size:1.5em;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:15px;
-    transition:all 0.3s ease;
-    box-shadow:0 5px 20px rgba(0,198,255,0.5);
-    position:relative;
-    overflow:hidden;
+  background:linear-gradient(45deg,var(--primary),var(--secondary));
+  border:none;
+  border-radius:50px;
+  padding:20px 50px;
+  color:var(--bg-dark);
+  font-weight:700;
+  font-size:1.5em;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:15px;
+  transition:all 0.3s ease;
+  box-shadow:0 5px 20px rgba(0,198,255,0.5);
+  position:relative;
+  overflow:hidden;
 }
 .launch-btn:hover:not(:disabled){
-    transform:translateY(-5px) scale(1.05);
-    box-shadow:0 10px 40px rgba(0,198,255,0.7);
-    animation:glow 1.5s infinite;
+  transform:translateY(-5px) scale(1.05);
+  box-shadow:0 10px 40px rgba(0,198,255,0.7);
+  animation:glow 1.5s infinite;
 }
 .launch-btn:disabled{
-    background:#555;
-    color:#999;
-    cursor:not-allowed;
-    box-shadow:none;
+  background:#555;
+  color:#999;
+  cursor:not-allowed;
+  box-shadow:none;
 }
 .launch-btn .spinner{
-    display:none;
-    animation:spin 1s linear infinite;
+  display:none;
+  animation:spin 1s linear infinite;
 }
 .launch-btn.loading .spinner{display:inline-block;}
 .launch-btn.loading .btn-text,.launch-btn.loading .btn-icon{display:none;}
 
 /* ================= Tooltip ================= */
 .tooltip{
-    position:absolute;
-    top:-50px;
-    left:50%;
-    transform:translateX(-50%);
-    background:var(--secondary);
-    color:#fff;
-    padding:10px 15px;
-    border-radius:8px;
-    font-size:0.9em;
-    opacity:0;
-    pointer-events:none;
-    transition:opacity 0.3s ease;
-    white-space:nowrap;
+  position:absolute;
+  top:-50px;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--secondary);
+  color:#fff;
+  padding:10px 15px;
+  border-radius:8px;
+  font-size:0.9em;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.3s ease;
+  white-space:nowrap;
 }
 .button-container:hover .tooltip{opacity:1;}
 
 /* ================= Status ================= */
 #status-message{
-    display:block;
-    width:100%;
-    padding:20px;
-    margin-top:20px;
-    border-radius:12px;
-    font-weight:600;
-    text-align:center;
-    box-shadow:0 5px 20px rgba(0,0,0,0.3);
-    font-size:1.1em;
-    transition:all 0.4s ease;
+  display:block;
+  width:100%;
+  padding:20px;
+  margin-top:20px;
+  border-radius:12px;
+  font-weight:600;
+  text-align:center;
+  box-shadow:0 5px 20px rgba(0,0,0,0.3);
+  font-size:1.1em;
+  transition:all 0.4s ease;
 }
 #status-message.success{background:var(--success-bg);color:var(--success-color);}
 #status-message.warning{background:var(--warning-bg);color:var(--warning-color);}
 #status-message.error{background:var(--error-bg);color:#fff;}
 
+/* ================= Prompt Dashboard ================= */
+#prompt-dashboard{
+  margin-top:30px;
+  width:100%;
+}
+.prompt-card{
+  background:rgba(255,255,255,0.05);
+  padding:15px 20px;
+  border-radius:15px;
+  margin-bottom:15px;
+  transition:all 0.3s ease;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+  display:flex;
+  flex-direction:column;
+}
+.prompt-card.active{background:rgba(0,198,255,0.1);}
+.prompt-title{
+  font-weight:600;
+  font-size:1.2em;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.prompt-status{
+  margin-top:8px;
+  font-size:0.95em;
+  color:var(--primary);
+}
+.prompt-progress-container{
+  width:100%;
+  background:rgba(255,255,255,0.1);
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:10px;
+  height:15px;
+}
+.prompt-progress-bar{
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  transition:width 1s linear;
+  border-radius:20px;
+}
+.prompt-timer{
+  margin-top:5px;
+  font-size:0.9em;
+  color:var(--secondary);
+}
+.prompt-iframe{
+  width:100%;
+  height:300px;
+  border:none;
+  border-radius:10px;
+  margin-top:10px;
+}
+
 /* ================= Progress Bar ================= */
 .progress-container{
-    width:100%;
-    background:rgba(255,255,255,0.1);
-    border-radius:20px;
-    overflow:hidden;
-    margin-top:15px;
-    height:20px;
+  width:100%;
+  background:rgba(255,255,255,0.1);
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:15px;
+  height:20px;
 }
 .progress-bar{
-    width:0%;
-    height:100%;
-    background:linear-gradient(90deg,var(--primary),var(--secondary));
-    transition:width 1s linear;
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  transition:width 1s linear;
 }
 
 /* ================= Timer ================= */
 #timer{
-    font-size:1.2em;
-    font-weight:600;
-    margin-top:10px;
-    text-align:center;
-    animation:fadeIn 1s ease forwards;
+  font-size:1.2em;
+  font-weight:600;
+  margin-top:10px;
+  text-align:center;
+  animation:fadeIn 1s ease forwards;
 }
 
 /* ================= Fallback Links ================= */
-.fallback-links-list li{
-    margin:10px 0;
-}
+.fallback-links-list li{margin:10px 0;}
 .fallback-links-list a{
-    color:var(--primary);
-    font-weight:600;
-    background:var(--hover);
-    padding:10px 20px;
-    border-radius:8px;
-    display:block;
-    transition:background 0.3s ease,color 0.3s;
+  color:var(--primary);
+  font-weight:600;
+  background:var(--hover);
+  padding:10px 20px;
+  border-radius:8px;
+  display:block;
+  transition:background 0.3s ease,color 0.3s;
 }
 .fallback-links-list a:hover{
-    background:var(--secondary);
-    color:white;
+  background:var(--secondary);
+  color:white;
 }
-
-/* ================= Hidden Iframe ================= */
-.hidden-iframe{display:none;}
 
 /* ================= Animations ================= */
 @keyframes spin{to{transform:rotate(360deg);}}
@@ -191,180 +242,126 @@ h1{
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 @keyframes bounceIn{from{opacity:0;transform:scale(0.8);}to{opacity:1;transform:scale(1);}}
 @keyframes glow{
-    0%{box-shadow:0 0 5px rgba(0,198,255,0.5);}
-    50%{box-shadow:0 0 20px rgba(0,198,255,1);}
-    100%{box-shadow:0 0 5px rgba(0,198,255,0.5);}
+  0%{box-shadow:0 0 5px rgba(0,198,255,0.5);}
+  50%{box-shadow:0 0 20px rgba(0,198,255,1);}
+  100%{box-shadow:0 0 5px rgba(0,198,255,0.5);}
 }
 
 /* ================= Responsive ================= */
-@media(max-width:700px){
-    h1{font-size:2em;}
-    .launch-btn{width:100%;font-size:1.3em;padding:18px;}
-    .container{padding:25px;}
+@media(max-width:900px){
+  h1{font-size:2em;}
+  .launch-btn{width:100%;font-size:1.3em;padding:18px;}
+  .container{padding:25px;}
 }
 </style>
 </head>
 <body>
-
 <canvas id="particle-canvas"></canvas>
-
 <main class="container">
-    <h1><i class="fa-solid fa-rocket"></i> GSA Ultimate Launcher</h1>
-    <div class="button-container">
-        <div class="tooltip">Prompts will load sequentially in the background</div>
-        <button class="launch-btn" id="launchBtn">
-            <i class="fa-solid fa-bolt-lightning btn-icon"></i>
-            <span class="btn-text">Launch All Prompts</span>
-            <i class="fa-solid fa-spinner spinner"></i>
-        </button>
-    </div>
-
-    <div id="status-message"></div>
-
-    <div class="progress-container">
-        <div class="progress-bar" id="progress-bar"></div>
-    </div>
-
-    <div id="timer">Waiting to start...</div>
-
-    <div id="fallback-links"></div>
+  <h1><i class="fa-solid fa-rocket"></i> GSA Interactive Launcher</h1>
+  <div class="button-container">
+    <div class="tooltip">Prompts will load sequentially in the background</div>
+    <button class="launch-btn" id="launchBtn">
+      <i class="fa-solid fa-bolt-lightning btn-icon"></i>
+      <span class="btn-text">Launch All Prompts</span>
+      <i class="fa-solid fa-spinner spinner"></i>
+    </button>
+  </div>
+  <div id="status-message"></div>
+  <div class="progress-container">
+    <div class="progress-bar" id="progress-bar"></div>
+  </div>
+  <div id="timer">Waiting to start...</div>
+  <div id="prompt-dashboard"></div>
+  <div id="fallback-links"></div>
 </main>
 
 <script>
-// ==================== Particle Background ====================
+// ================= Particle Background ====================
 const canvas=document.getElementById('particle-canvas');
 const ctx=canvas.getContext('2d');
 let w=canvas.width=window.innerWidth;
 let h=canvas.height=window.innerHeight;
-const particles=[];
-for(let i=0;i<100;i++){
-    particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+1,dx:(Math.random()-0.5)*1,dy:(Math.random()-0.5)*1});
-}
-function animateParticles(){
-    ctx.clearRect(0,0,w,h);
-    for(let p of particles){
-        ctx.beginPath();
-        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-        ctx.fillStyle='rgba(0,198,255,0.5)';
-        ctx.fill();
-        p.x+=p.dx;p.y+=p.dy;
-        if(p.x>w||p.x<0)p.dx*=-1;
-        if(p.y>h||p.y<0)p.dy*=-1;
-    }
-    requestAnimationFrame(animateParticles);
-}
-animateParticles();
 window.addEventListener('resize',()=>{w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;});
+const particles=[];
+for(let i=0;i<80;i++){particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*3+1,speed:Math.random()*0.5+0.2})}
+function drawParticles(){ctx.clearRect(0,0,w,h);particles.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,2*Math.PI);ctx.fillStyle='rgba(0,198,255,0.4)';ctx.fill();p.y-=p.speed;if(p.y<0)p.y=h;});requestAnimationFrame(drawParticles);}
+drawParticles();
 
-// ==================== Prompt Launcher ====================
-document.addEventListener('DOMContentLoaded',()=>{
-    const urls=[
-        "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=18&v=2",
-        "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=19&v=2",
-        "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=20&v=2",
-        "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=21&v=2",
-        "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=22&v=2"
-    ];
+// ================= Prompt Launcher ====================
+const urls=[
+  "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=18&v=2",
+  "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=19&v=2",
+  "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=20&v=2",
+  "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=21&v=2",
+  "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=22&v=2"
+];
 
-    const launchBtn=document.getElementById('launchBtn');
-    const statusMessage=document.getElementById('status-message');
-    const progressBar=document.getElementById('progress-bar');
-    const timerEl=document.getElementById('timer');
-    const fallbackLinksContainer=document.getElementById('fallback-links');
+const launchBtn=document.getElementById('launchBtn');
+const statusMessage=document.getElementById('status-message');
+const dashboard=document.getElementById('prompt-dashboard');
+const progressBar=document.getElementById('progress-bar');
+const timerEl=document.getElementById('timer');
+let totalPrompts=urls.length;
 
-    const sound=new Audio('https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg'); // prompt sound
+// Create dashboard cards
+urls.forEach((url,i)=>{
+  const card=document.createElement('div');
+  card.className='prompt-card';
+  card.id=`prompt-card-${i}`;
+  card.innerHTML=`
+    <div class="prompt-title"><i class="fa-solid fa-file-lines"></i> Prompt ${i+1}</div>
+    <div class="prompt-status">Pending</div>
+    <div class="prompt-progress-container"><div class="prompt-progress-bar" id="prompt-progress-${i}"></div></div>
+    <div class="prompt-timer" id="prompt-timer-${i}">Waiting...</div>
+    <iframe class="prompt-iframe" id="prompt-iframe-${i}" src=""></iframe>
+  `;
+  dashboard.appendChild(card);
+});
 
-    function loadPromptSequentially(index=0){
-        if(index>=urls.length){
-            statusMessage.className='success';
-            statusMessage.innerHTML=`<i class="fa-solid fa-check-circle"></i> Successfully loaded all ${urls.length} prompts! 🎉`;
-            timerEl.innerHTML='All prompts completed!';
-            launchBtn.disabled=false;
-            launchBtn.classList.remove('loading');
-            progressBar.style.width='100%';
-            confettiEffect();
-            return;
-        }
+// Sequential loader
+function loadPrompt(index=0){
+  if(index>=totalPrompts){
+    statusMessage.className='success';
+    statusMessage.innerHTML=`<i class="fa-solid fa-check-circle"></i> All prompts loaded! 🎉`;
+    timerEl.innerHTML='Completed!';
+    launchBtn.disabled=false;
+    launchBtn.classList.remove('loading');
+    progressBar.style.width='100%';
+    return;
+  }
+  const card=document.getElementById(`prompt-card-${index}`);
+  const progress=document.getElementById(`prompt-progress-${index}`);
+  const timer=document.getElementById(`prompt-timer-${index}`);
+  const iframe=document.getElementById(`prompt-iframe-${index}`);
+  card.classList.add('active');
+  statusMessage.className='';
+  statusMessage.innerHTML=`Loading Prompt ${index+1} of ${totalPrompts}...`;
+  iframe.src=urls[index];
+  progress.style.width='0%';
+  let countdown=10;
+  timer.innerHTML=`Next prompt in ${countdown} seconds`;
+  const interval=setInterval(()=>{
+    countdown--;
+    progress.style.width=`${((10-countdown)/10)*100}%`;
+    timer.innerHTML=`Next prompt in ${countdown} seconds`;
+  },1000);
+  setTimeout(()=>{
+    clearInterval(interval);
+    progress.style.width='100%';
+    timer.innerHTML='Completed';
+    card.querySelector('.prompt-status').innerHTML='Loaded';
+    card.classList.remove('active');
+    progressBar.style.width=`${((index+1)/totalPrompts)*100}%`;
+    loadPrompt(index+1);
+  },10000);
+}
 
-        statusMessage.className='';
-        statusMessage.innerHTML=`Loading prompt ${index+1} of ${urls.length}...`;
-        progressBar.style.width=`${((index)/urls.length)*100}%`;
-
-        // Play sound
-        sound.currentTime=0;
-        sound.play();
-
-        // Hidden iframe
-        const iframe=document.createElement('iframe');
-        iframe.src=urls[index];
-        iframe.className='hidden-iframe';
-        document.body.appendChild(iframe);
-
-        // Countdown Timer
-        let countdown=10;
-        timerEl.innerHTML=`Next prompt in ${countdown} seconds...`;
-        const countdownInterval=setInterval(()=>{
-            countdown--;
-            if(countdown>0){
-                timerEl.innerHTML=`Next prompt in ${countdown} seconds...`;
-            }
-        },1000);
-
-        // Wait 10 sec before next
-        setTimeout(()=>{
-            clearInterval(countdownInterval);
-            loadPromptSequentially(index+1);
-        },10000);
-    }
-
-    launchBtn.addEventListener('click',()=>{
-        launchBtn.disabled=true;
-        launchBtn.classList.add('loading');
-        loadPromptSequentially(0);
-    });
-
-    // Fallback links
-    fallbackLinksContainer.innerHTML=`
-        <p>You can open the prompts manually:</p>
-        <ul class="fallback-links-list">
-            ${urls.map((link,i)=>`<li><a href="${link}" target="_blank">Open Prompt ${i+1}</a></li>`).join('')}
-        </ul>
-    `;
-
-    // ================= Confetti Effect =================
-    function confettiEffect(){
-        const confetti=document.createElement('canvas');
-        confetti.width=window.innerWidth;
-        confetti.height=window.innerHeight;
-        confetti.style.position='fixed';
-        confetti.style.top='0';
-        confetti.style.left='0';
-        confetti.style.pointerEvents='none';
-        confetti.style.zIndex='9999';
-        document.body.appendChild(confetti);
-        const cctx=confetti.getContext('2d');
-        const confettis=[];
-        for(let i=0;i<200;i++){
-            confettis.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,r:Math.random()*6+2,dx:(Math.random()-0.5)*5,dy:(Math.random()*3+2),color:`hsl(${Math.random()*360},100%,50%)`});
-        }
-        let count=0;
-        function animateConfetti(){
-            cctx.clearRect(0,0,window.innerWidth,window.innerHeight);
-            for(let p of confettis){
-                cctx.fillStyle=p.color;
-                cctx.beginPath();
-                cctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-                cctx.fill();
-                p.x+=p.dx;p.y+=p.dy;
-                if(p.y>window.innerHeight)p.y=-10;
-            }
-            count++;
-            if(count<300)requestAnimationFrame(animateConfetti);
-            else document.body.removeChild(confetti);
-        }
-        animateConfetti();
-    }
-
+// Launch button event
+launchBtn.addEventListener('click',()=>{
+  launchBtn.disabled=true;
+  launchBtn.classList.add('loading');
+  loadPrompt();
 });
 </script>
 </body>
