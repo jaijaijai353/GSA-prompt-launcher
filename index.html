@@ -1,301 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌐 GSA Prompt Launcher</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #00c6ff;
-            --secondary-color: #0072ff;
-            --dark-bg: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.8);
-            --light-text: #e0e0e0;
-            --hover-color: #334155;
-            --warning-bg: #ffc107;
-            --warning-color: #333;
-            --success-bg: #28a745;
-            --success-color: #fff;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: var(--light-text);
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            flex-direction: column;
-            min-height: 100vh;
-            padding: 40px 20px;
-        }
-
-        h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
-            color: white;
-            text-align: center;
-            text-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
-            animation: fadeInDown 1s ease forwards;
-        }
-
-        .container {
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 20px;
-            width: 100%;
-            max-width: 700px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            animation: fadeIn 1s ease forwards;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .button-container {
-            position: relative;
-            margin: 20px 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-
-        .launch-btn {
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            border: none;
-            border-radius: 50px;
-            padding: 20px 50px;
-            color: var(--dark-bg);
-            font-weight: 600;
-            font-size: 1.5em;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0, 198, 255, 0.4);
-            white-space: nowrap;
-        }
-
-        .launch-btn:hover:not(:disabled) {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 8px 30px rgba(0, 198, 255, 0.6);
-        }
-
-        .launch-btn:disabled {
-            background: #555;
-            color: #999;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        .launch-btn .spinner {
-            display: none;
-            animation: spin 1s linear infinite;
-        }
-
-        .launch-btn.loading .spinner { display: inline-block; }
-        .launch-btn.loading .btn-text, .launch-btn.loading .btn-icon { display: none; }
-
-        .tooltip {
-            position: absolute;
-            top: -50px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--secondary-color);
-            color: #fff;
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-size: 0.9em;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            white-space: nowrap;
-        }
-
-        .button-container:hover .tooltip {
-            opacity: 1;
-        }
-
-        #status-message {
-            display: none;
-            width: 100%;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 12px;
-            font-weight: 600;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-            animation: bounceIn 0.5s ease forwards;
-        }
-
-        #status-message.warning {
-            background: var(--warning-bg);
-            color: var(--warning-color);
-        }
-        
-        #status-message.success {
-            background: var(--success-bg);
-            color: var(--success-color);
-        }
-        
-        .recheck-btn {
-            background: #333;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 8px 15px;
-            margin: 15px auto 0;
-            cursor: pointer;
-            transition: background 0.2s;
-            display: block;
-        }
-
-        .recheck-btn:hover { background: #444; }
-        
-        .popup-help-container {
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(51, 65, 85, 0.7);
-        }
-        .help-title {
-            font-weight: 600;
-            margin-bottom: 15px;
-            font-size: 1.1em;
-            color: #444;
-        }
-        .help-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        .help-tab-btn {
-            background: rgba(0,0,0,0.1);
-            border: 1px solid rgba(0,0,0,0.2);
-            color: var(--warning-color);
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .help-tab-btn:hover {
-            background: rgba(0,0,0,0.2);
-        }
-        .help-tab-btn.active {
-            background: var(--dark-bg);
-            color: var(--primary-color);
-            border-color: var(--dark-bg);
-        }
-        .help-content {
-            display: none;
-            text-align: left;
-            background: rgba(0, 0, 0, 0.05);
-            padding: 20px;
-            border-radius: 10px;
-            color: #333;
-        }
-        .help-content.active {
-            display: block;
-            animation: fadeIn 0.4s ease;
-        }
-        .help-content ol {
-            padding-left: 25px;
-            margin-top: 10px;
-        }
-        .help-content li {
-            margin-bottom: 8px;
-            line-height: 1.6;
-        }
-        .help-content i {
-            color: var(--secondary-color);
-            width: 20px;
-            text-align: center;
-        }
-        .help-content strong {
-            color: #000;
-        }
-
-        #fallback-links {
-            width: 100%;
-            margin-top: 25px;
-            text-align: center;
-        }
-        
-        .fallback-links-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .fallback-links-list li {
-            margin: 10px 0;
-        }
-
-        .fallback-links-list a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            background: var(--hover-color);
-            padding: 10px 20px;
-            border-radius: 8px;
-            display: block;
-            transition: background 0.3s ease;
-        }
-
-        .fallback-links-list a:hover {
-            background: var(--secondary-color);
-            color: white;
-        }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes bounceIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
-
-        @media (max-width: 600px) {
-            h1 { font-size: 2em; }
-            .launch-btn { width: 100%; font-size: 1.3em; padding: 18px; }
-            .container { padding: 25px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌐 GSA Prompt Launcher</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+    --primary-color: #00c6ff;
+    --secondary-color: #0072ff;
+    --dark-bg: #0f172a;
+    --card-bg: rgba(30, 41, 59, 0.8);
+    --light-text: #e0e0e0;
+    --hover-color: #334155;
+    --warning-bg: #ffc107;
+    --warning-color: #333;
+    --success-bg: #28a745;
+    --success-color: #fff;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Poppins',sans-serif;background:linear-gradient(135deg,#0f172a,#1e293b);color:var(--light-text);display:flex;justify-content:flex-start;align-items:center;flex-direction:column;min-height:100vh;padding:40px 20px;}
+h1{font-size:3em;margin-bottom:20px;color:white;text-align:center;text-shadow:0 0 10px rgba(0,198,255,0.5);}
+.container{background:var(--card-bg);padding:40px;border-radius:20px;width:100%;max-width:700px;box-shadow:0 10px 40px rgba(0,0,0,0.5);backdrop-filter:blur(10px);display:flex;flex-direction:column;align-items:center;}
+.button-container{position:relative;margin:20px 0;width:100%;display:flex;justify-content:center;}
+.launch-btn{background:linear-gradient(45deg,var(--primary-color),var(--secondary-color));border:none;border-radius:50px;padding:20px 50px;color:var(--dark-bg);font-weight:600;font-size:1.5em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:15px;transition:all 0.3s ease;box-shadow:0 4px 20px rgba(0,198,255,0.4);}
+.launch-btn:disabled{background:#555;color:#999;cursor:not-allowed;}
+.launch-btn .spinner{display:none;animation:spin 1s linear infinite;}
+.launch-btn.loading .spinner{display:inline-block;}
+.launch-btn.loading .btn-text,.launch-btn.loading .btn-icon{display:none;}
+.tooltip{position:absolute;top:-50px;left:50%;transform:translateX(-50%);background:var(--secondary-color);color:#fff;padding:10px 15px;border-radius:8px;font-size:0.9em;opacity:0;pointer-events:none;transition:opacity 0.3s ease;white-space:nowrap;}
+.button-container:hover .tooltip{opacity:1;}
+#status-message{display:block;width:100%;padding:20px;margin-top:20px;border-radius:12px;font-weight:600;text-align:center;box-shadow:0 5px 20px rgba(0,0,0,0.3);}
+#status-message.warning{background:var(--warning-bg);color:var(--warning-color);}
+#status-message.success{background:var(--success-bg);color:var(--success-color);}
+.fallback-links-list{list-style:none;padding:0;}
+.fallback-links-list li{margin:10px 0;}
+.fallback-links-list a{color:var(--primary-color);text-decoration:none;font-weight:600;background:var(--hover-color);padding:10px 20px;border-radius:8px;display:block;transition:background 0.3s ease;}
+.fallback-links-list a:hover{background:var(--secondary-color);color:white;}
+@keyframes spin{to{transform:rotate(360deg);}}
+</style>
 </head>
 <body>
 
 <main class="container">
     <h1><i class="fa-solid fa-rocket"></i> GSA Prompt Launcher</h1>
-
     <div class="button-container">
-        <div class="tooltip">Pop-ups must be enabled to open all prompts</div>
+        <div class="tooltip">Prompts will load sequentially in this tab</div>
         <button class="launch-btn" id="launchBtn">
             <i class="fa-solid fa-bolt-lightning btn-icon"></i>
             <span class="btn-text">Launch All Prompts</span>
             <i class="fa-solid fa-spinner spinner"></i>
         </button>
     </div>
-
-    <div id="status-message" role="alert"></div>
+    <div id="status-message"></div>
     <div id="fallback-links"></div>
 </main>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const PROMPT_LINKS = [
+    const urls = [
         "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=18&v=2",
         "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=19&v=2",
         "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=20&v=2",
@@ -307,46 +71,42 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusMessage = document.getElementById('status-message');
     const fallbackLinksContainer = document.getElementById('fallback-links');
 
-    // Create a hidden iframe to sequentially load URLs
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
-
-    function loadSequentialUrls(urls) {
-        let index = 0;
-        function loadNext() {
-            if(index >= urls.length) {
-                statusMessage.className = 'success';
-                statusMessage.innerHTML = `<i class="fa-solid fa-check-circle"></i> Successfully loaded all ${urls.length} prompts in sequence!`;
-                statusMessage.style.display = 'block';
-                return;
-            }
-            statusMessage.className = '';
-            statusMessage.style.display = 'block';
-            statusMessage.innerHTML = `Loading prompt ${index + 1} of ${urls.length}...`;
-
-            iframe.src = urls[index];
-            iframe.onload = () => {
-                setTimeout(() => {
-                    index++;
-                    loadNext();
-                }, 1500); // buffer for client-side scripts
-            };
+    function loadSequentialUrls(index = 0) {
+        if (index >= urls.length) {
+            statusMessage.className = 'success';
+            statusMessage.innerHTML = `<i class="fa-solid fa-check-circle"></i> Successfully loaded all ${urls.length} prompts!`;
+            launchBtn.disabled = false;
+            launchBtn.classList.remove('loading');
+            return;
         }
-        loadNext();
+        statusMessage.className = '';
+        statusMessage.innerHTML = `Loading prompt ${index + 1} of ${urls.length}...`;
+
+        // Redirect current tab to the URL
+        const tempWindow = window.open(urls[index], '_self');
+
+        // Use localStorage to track the next index
+        localStorage.setItem('nextIndex', index + 1);
+    }
+
+    // On page load, check if a nextIndex is stored
+    const nextIndex = parseInt(localStorage.getItem('nextIndex') || '0', 10);
+    if(nextIndex > 0 && nextIndex <= urls.length){
+        loadSequentialUrls(nextIndex);
+        localStorage.removeItem('nextIndex');
     }
 
     launchBtn.addEventListener('click', () => {
         launchBtn.disabled = true;
         launchBtn.classList.add('loading');
-        loadSequentialUrls(PROMPT_LINKS);
+        loadSequentialUrls(0);
     });
 
-    // Generate fallback links
+    // Fallback links
     fallbackLinksContainer.innerHTML = `
         <p>You can open the prompts manually:</p>
         <ul class="fallback-links-list">
-            ${PROMPT_LINKS.map((link, i) => `<li><a href="${link}" target="_blank" rel="noopener noreferrer">Open Prompt ${i+1}</a></li>`).join('')}
+            ${urls.map((link,i)=>`<li><a href="${link}" target="_blank">Open Prompt ${i+1}</a></li>`).join('')}
         </ul>
     `;
 });
