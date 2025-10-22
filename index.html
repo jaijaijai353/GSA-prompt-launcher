@@ -20,12 +20,7 @@
             --success-color: #fff;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #0f172a, #1e293b);
@@ -37,7 +32,6 @@
             min-height: 100vh;
             padding: 40px 20px;
         }
-
         h1 {
             font-size: 3em;
             margin-bottom: 20px;
@@ -61,13 +55,7 @@
             align-items: center;
         }
 
-        .button-container {
-            position: relative;
-            margin: 20px 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
+        .button-container { position: relative; margin: 20px 0; width: 100%; display: flex; justify-content: center; }
 
         .launch-btn {
             background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
@@ -99,14 +87,9 @@
             box-shadow: none;
         }
 
-        .launch-btn .spinner {
-            display: none;
-            animation: spin 1s linear infinite;
-        }
-
+        .launch-btn .spinner { display: none; animation: spin 1s linear infinite; }
         .launch-btn.loading .spinner { display: inline-block; }
         .launch-btn.loading .btn-text, .launch-btn.loading .btn-icon { display: none; }
-
 
         .tooltip {
             position: absolute;
@@ -124,9 +107,7 @@
             white-space: nowrap;
         }
 
-        .button-container:hover .tooltip {
-            opacity: 1;
-        }
+        .button-container:hover .tooltip { opacity: 1; }
 
         #status-message {
             display: none;
@@ -140,16 +121,9 @@
             animation: bounceIn 0.5s ease forwards;
         }
 
-        #status-message.warning {
-            background: var(--warning-bg);
-            color: var(--warning-color);
-        }
-        
-        #status-message.success {
-            background: var(--success-bg);
-            color: var(--success-color);
-        }
-        
+        #status-message.warning { background: var(--warning-bg); color: var(--warning-color); }
+        #status-message.success { background: var(--success-bg); color: var(--success-color); }
+
         .recheck-btn {
             background: #333;
             color: #fff;
@@ -163,26 +137,11 @@
         }
 
         .recheck-btn:hover { background: #444; }
-        
-        /* --- NEW STYLES for POP-UP HELP --- */
-        .popup-help-container {
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(51, 65, 85, 0.7);
-        }
-        .help-title {
-            font-weight: 600;
-            margin-bottom: 15px;
-            font-size: 1.1em;
-            color: #444;
-        }
-        .help-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
+
+        /* --- HELP POPUP --- */
+        .popup-help-container { margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(51, 65, 85, 0.7); }
+        .help-title { font-weight: 600; margin-bottom: 15px; font-size: 1.1em; color: #444; }
+        .help-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
         .help-tab-btn {
             background: rgba(0,0,0,0.1);
             border: 1px solid rgba(0,0,0,0.2);
@@ -193,63 +152,20 @@
             font-weight: 600;
             font-family: 'Poppins', sans-serif;
             transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            display: flex; align-items: center; gap: 8px;
         }
-        .help-tab-btn:hover {
-            background: rgba(0,0,0,0.2);
-        }
-        .help-tab-btn.active {
-            background: var(--dark-bg);
-            color: var(--primary-color);
-            border-color: var(--dark-bg);
-        }
-        .help-content {
-            display: none;
-            text-align: left;
-            background: rgba(0, 0, 0, 0.05);
-            padding: 20px;
-            border-radius: 10px;
-            color: #333;
-        }
-        .help-content.active {
-            display: block;
-            animation: fadeIn 0.4s ease;
-        }
-        .help-content ol {
-            padding-left: 25px;
-            margin-top: 10px;
-        }
-        .help-content li {
-            margin-bottom: 8px;
-            line-height: 1.6;
-        }
-        .help-content i {
-            color: var(--secondary-color);
-            width: 20px;
-            text-align: center;
-        }
-        .help-content strong {
-            color: #000;
-        }
-        /* --- END NEW STYLES --- */
+        .help-tab-btn:hover { background: rgba(0,0,0,0.2); }
+        .help-tab-btn.active { background: var(--dark-bg); color: var(--primary-color); border-color: var(--dark-bg); }
+        .help-content { display: none; text-align: left; background: rgba(0, 0, 0, 0.05); padding: 20px; border-radius: 10px; color: #333; }
+        .help-content.active { display: block; animation: fadeIn 0.4s ease; }
+        .help-content ol { padding-left: 25px; margin-top: 10px; }
+        .help-content li { margin-bottom: 8px; line-height: 1.6; }
+        .help-content i { color: var(--secondary-color); width: 20px; text-align: center; }
+        .help-content strong { color: #000; }
 
-        #fallback-links {
-            width: 100%;
-            margin-top: 25px;
-            text-align: center;
-        }
-        
-        .fallback-links-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .fallback-links-list li {
-            margin: 10px 0;
-        }
-
+        #fallback-links { width: 100%; margin-top: 25px; text-align: center; }
+        .fallback-links-list { list-style: none; padding: 0; }
+        .fallback-links-list li { margin: 10px 0; }
         .fallback-links-list a {
             color: var(--primary-color);
             text-decoration: none;
@@ -260,12 +176,7 @@
             display: block;
             transition: background 0.3s ease;
         }
-
-        .fallback-links-list a:hover {
-            background: var(--secondary-color);
-            color: white;
-        }
-
+        .fallback-links-list a:hover { background: var(--secondary-color); color: white; }
 
         @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
@@ -299,7 +210,6 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Configuration ---
     const PROMPT_LINKS = [
         "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=16&v=2",
         "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=15&v=2",
@@ -307,99 +217,50 @@ document.addEventListener('DOMContentLoaded', () => {
         "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=13&v=2",
         "https://aiskillshouse.com/student/qr-mediator.html?uid=2307&promptId=17&v=2"
     ];
-    const LAUNCH_DELAY_MS = 300; // A slight delay can help avoid aggressive browser blocking
 
-    // --- UI Elements ---
     const launchBtn = document.getElementById('launchBtn');
     const statusMessage = document.getElementById('status-message');
     const fallbackLinksContainer = document.getElementById('fallback-links');
 
-    // --- Core Functions ---
-
-    /**
-     * Checks if pop-ups are enabled by attempting to open and close a small window.
-     * @returns {boolean} - True if pop-ups are likely allowed, false otherwise.
-     */
     function checkPopupPermissions() {
         const testWindow = window.open('about:blank', '_blank', 'width=1,height=1,left=9999,top=9999');
-        if (!testWindow || testWindow.closed || typeof testWindow.closed === 'undefined') {
-            return false;
-        }
+        if (!testWindow || testWindow.closed || typeof testWindow.closed === 'undefined') return false;
         testWindow.close();
         return true;
     }
 
-    /**
-     * Updates the UI based on the pop-up permission status.
-     * @param {boolean} arePopupsAllowed - The status of pop-up permissions.
-     */
-    function updateUiForPermissions(arePopupsAllowed) {
+    function updateUiForPermissions(allowed) {
         statusMessage.style.display = 'none';
         statusMessage.innerHTML = '';
         fallbackLinksContainer.innerHTML = '';
 
-        if (arePopupsAllowed) {
+        if (allowed) {
             launchBtn.disabled = false;
         } else {
             launchBtn.disabled = true;
             statusMessage.className = 'warning';
             statusMessage.innerHTML = `
                 <i class="fa-solid fa-triangle-exclamation"></i> <strong>Pop-ups Blocked!</strong><br>
-                To launch all prompts automatically, you need to allow pop-ups for this site.
+                To launch all prompts automatically, allow pop-ups for this site.
                 <button class="recheck-btn">Re-check Permissions</button>
-                <div class="popup-help-container">
-                    <p class="help-title">How to enable pop-ups?</p>
-                    <div class="help-tabs">
-                        <button class="help-tab-btn active" data-target="help-desktop"><i class="fa-solid fa-laptop"></i> Desktop / Mac</button>
-                        <button class="help-tab-btn" data-target="help-android"><i class="fa-brands fa-android"></i> Android</button>
-                        <button class="help-tab-btn" data-target="help-iphone"><i class="fa-brands fa-apple"></i> iPhone</button>
-                    </div>
-                    <div class="help-content active" id="help-desktop">
-                        <p>On <strong>Chrome, Firefox, Edge, or Safari</strong>, after a pop-up is blocked, an icon usually appears in the right side of the address bar.</p>
-                        
-                        <p style="margin-top:10px;">Click the icon and choose to <strong>"Always allow pop-ups and redirects"</strong> from this website, then try launching again.</p>
-                    </div>
-                    <div class="help-content" id="help-android">
-                        <p><strong>For Chrome on Android:</strong></p>
-                        <ol>
-                            <li>Tap the three-dot menu <i class="fa-solid fa-ellipsis-v"></i> in the top-right.</li>
-                            <li>Go to <strong>Settings</strong> &rarr; <strong>Site settings</strong> &rarr; <strong>Pop-ups and redirects</strong>.</li>
-                            <li>Make sure the toggle is set to <strong>Allowed</strong>.</li>
-                        </ol>
-                    </div>
-                    <div class="help-content" id="help-iphone">
-                        <p><strong>For Safari on iPhone/iPad:</strong></p>
-                         <ol>
-                            <li>Open the <strong>Settings</strong> app on your device.</li>
-                            <li>Scroll down and tap on <strong>Safari</strong>.</li>
-                            <li>Under the "GENERAL" section, find <strong>Block Pop-ups</strong> and turn the switch <strong>OFF</strong>.</li>
-                        </ol>
-                    </div>
-                </div>
             `;
             statusMessage.style.display = 'block';
         }
     }
 
-    /**
-     * Creates a list of clickable links as a fallback if pop-ups fail.
-     * @param {string[]} links - Array of URLs to display.
-     */
     function generateFallbackLinks(links) {
         fallbackLinksContainer.innerHTML = `
             <p>You can open the prompts manually:</p>
             <ul class="fallback-links-list">
-                ${links.map((link, i) => <li><a href="${link}" target="_blank" rel="noopener noreferrer">Open Prompt ${i + 1}</a></li>).join('')}
+                ${links.map((link,i)=>`<li><a href="${link}" target="_blank" rel="noopener noreferrer">Open Prompt ${i+1}</a></li>`).join('')}
             </ul>
         `;
     }
 
-    /**
-     * Handles the main logic of launching all prompt windows.
-     */
     function handleLaunch() {
         if (!checkPopupPermissions()) {
             updateUiForPermissions(false);
+            generateFallbackLinks(PROMPT_LINKS);
             return;
         }
 
@@ -407,64 +268,50 @@ document.addEventListener('DOMContentLoaded', () => {
         launchBtn.disabled = true;
 
         let openedCount = 0;
-        const totalLinks = PROMPT_LINKS.length;
 
-        PROMPT_LINKS.forEach((url, i) => {
-            setTimeout(() => {
-                const newWindow = window.open(url, '_blank');
-                if (newWindow) {
-                    openedCount++;
-                }
-
-                // After the last attempt, update the UI
-                if (i === totalLinks - 1) {
-                    launchBtn.classList.remove('loading');
-                    updateUiForPermissions(true); // Re-enable the button
-
-                    if (openedCount === totalLinks) {
-                        statusMessage.className = 'success';
-                        statusMessage.innerHTML = <i class="fa-solid fa-check-circle"></i> Successfully launched all ${totalLinks} prompts!;
-                        statusMessage.style.display = 'block';
-                    } else {
-                        statusMessage.className = 'warning';
-                        statusMessage.innerHTML = <i class="fa-solid fa-triangle-exclamation"></i> Launched ${openedCount} of ${totalLinks} prompts. Your browser may have blocked the rest.;
-                        statusMessage.style.display = 'block';
-                        generateFallbackLinks(PROMPT_LINKS);
-                    }
-                }
-            }, i * LAUNCH_DELAY_MS);
+        PROMPT_LINKS.forEach((url) => {
+            const w = window.open(url, '_blank');
+            if (w) openedCount++;
         });
+
+        setTimeout(() => {
+            launchBtn.classList.remove('loading');
+            launchBtn.disabled = false;
+
+            if (openedCount === PROMPT_LINKS.length) {
+                statusMessage.className = 'success';
+                statusMessage.innerHTML = `<i class="fa-solid fa-check-circle"></i> Successfully launched all ${PROMPT_LINKS.length} prompts!`;
+            } else {
+                statusMessage.className = 'warning';
+                statusMessage.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Launched ${openedCount} of ${PROMPT_LINKS.length} prompts. Your browser may have blocked the rest.`;
+                generateFallbackLinks(PROMPT_LINKS);
+            }
+            statusMessage.style.display = 'block';
+        }, 200);
     }
 
-    // --- Event Delegation for Dynamic Content ---
-    statusMessage.addEventListener('click', (e) => {
-        // Handle recheck button click
-        if (e.target.closest('.recheck-btn')) {
+    statusMessage.addEventListener('click', (e)=>{
+        if(e.target.closest('.recheck-btn')){
             updateUiForPermissions(checkPopupPermissions());
         }
-
-        // Handle help tabs click
         const tab = e.target.closest('.help-tab-btn');
-        if (tab) {
+        if(tab){
             const targetId = tab.dataset.target;
             const helpContainer = tab.closest('.popup-help-container');
-            if (!helpContainer) return;
+            if(!helpContainer) return;
 
-            // Deactivate all tabs and content panels
-            helpContainer.querySelectorAll('.help-tab-btn').forEach(btn => btn.classList.remove('active'));
-            helpContainer.querySelectorAll('.help-content').forEach(content => content.classList.remove('active'));
+            helpContainer.querySelectorAll('.help-tab-btn').forEach(b=>b.classList.remove('active'));
+            helpContainer.querySelectorAll('.help-content').forEach(c=>c.classList.remove('active'));
 
-            // Activate the clicked tab and corresponding content panel
             tab.classList.add('active');
-            helpContainer.querySelector(#${targetId}).classList.add('active');
+            helpContainer.querySelector(`#${targetId}`).classList.add('active');
         }
     });
 
-    // --- Initialization ---
     launchBtn.addEventListener('click', handleLaunch);
-    // Perform initial check on page load
     updateUiForPermissions(checkPopupPermissions());
 });
 </script>
+
 </body>
 </html>
